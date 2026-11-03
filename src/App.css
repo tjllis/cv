@@ -62,7 +62,7 @@ h2 {
 
 /* Alternate red/pink and purple/lilac, as in the mockup */
 .btn:nth-child(even) {
-  border-color: var(--pink);
+  border-color: var(--text-red);
   color: var(--text-red);
   --btn-glow: rgba(149, 41, 77, 0.2);
 }
@@ -167,7 +167,8 @@ h2 {
 }
 
 .btn:is(:hover, :focus-visible) .btn-spark {
-  animation: btn-spark calc(1100ms * var(--speed)) ease-out var(--delay) infinite;
+  animation: btn-spark calc(1100ms * var(--speed)) ease-out var(--delay)
+    infinite;
 }
 
 @keyframes btn-spark {
