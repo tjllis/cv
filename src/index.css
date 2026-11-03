@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+:root {
+  --bg-pink: #fdcedf;
+  --bg-beige: #f9f5f6;
+  --bg-lilac: #dfccfb;
+  --text-purple: #714ad5;
+  --text-red: #95294d;
+  --lilac: #eceafd;
+  --pink: #f1add2;
+  --yellow: #ffef9f;
+  --text: #382139;
+  --white: #fcf8fb;
+  --surface: #ffffff;
+  --border: #f1d3e3;
+  --muted: #5c3f5a;
+  --faint: #7a5c78;
+  --accent: var(--text-red);
+  --accent-strong: var(--text-red);
+  --rose: #c2637f;
+  --sans:
+    "Nunito", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --fredoka: "Fredoka", "Inter", system-ui, sans-serif;
+
+  --text-gradient: linear-gradient(
+    90deg,
+    var(--text-red) 0%,
+    var(--text-purple) 100%
+  );
+
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-beige);
+}
+
+h1,
+h2 {
+  font-family: var(--fredoka);
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  background: var(--text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: fit-content;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.01ms;
+    transition-duration: 0.01ms;
+  }
+}

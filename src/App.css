@@ -1,0 +1,579 @@
+.page {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 72px 32px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+section {
+  margin: 0;
+}
+
+h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* ---------- Two columns ---------- */
+
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+.projects {
+  flex: 999 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.aside {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Keep the toolkit in view while scrolling the projects on desktop */
+@media (min-width: 721px) {
+  .aside {
+    position: sticky;
+    top: 32px;
+  }
+}
+
+/* ---------- Shared bits ---------- */
+
+.rule {
+  height: 2px;
+  background: var(--pink);
+  border: 0;
+  width: 100%;
+}
+
+/* Alternate red/pink and purple/lilac, as in the mockup */
+.btn:nth-child(even) {
+  border-color: var(--pink);
+  color: var(--text-red);
+  --btn-glow: rgba(149, 41, 77, 0.2);
+}
+
+:is(.toolkit-group, .entry):nth-child(even) .label {
+  color: var(--text-purple);
+}
+
+:is(.toolkit-group, .entry):nth-child(even) .rule {
+  background: var(--bg-lilac);
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1.5px solid var(--text-purple);
+  background: var(--surface);
+  color: var(--text-purple);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.2s;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--btn-glow, rgba(113, 74, 213, 0.2));
+}
+
+.text-link {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  color: var(--accent);
+}
+
+/* ---------- Button sparkles (offset-path along the border) ---------- */
+
+.btn-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.btn-spark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  color: var(--color);
+  opacity: 0;
+  scale: 0;
+  /* follow the button's rounded border */
+  offset-path: border-box;
+  offset-anchor: 50% 50%;
+  offset-rotate: 0deg;
+  --start: calc(100% / var(--n) * var(--i));
+  --delay: calc(var(--i) * 90ms);
+  --speed: calc(0.8 + 0.1 * mod(var(--i), 3));
+  --drift: calc(10px + 6px * mod(var(--i), 2));
+  offset-distance: var(--start);
+}
+
+.btn:is(:hover, :focus-visible) .btn-spark {
+  animation: btn-spark calc(1100ms * var(--speed)) ease-out var(--delay) infinite;
+}
+
+@keyframes btn-spark {
+  0% {
+    offset-distance: var(--start);
+    opacity: 0;
+    scale: 0;
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  30% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    offset-distance: calc(var(--start) + 22%);
+    opacity: 0;
+    scale: 0.2;
+    translate: 0 calc(var(--drift) * -1);
+    rotate: 90deg;
+  }
+}
+
+@supports not (offset-path: border-box) {
+  .btn-sparkles {
+    display: none;
+  }
+}
+
+/* ---------- Page effects from the draft ---------- */
+
+.blobs {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.blob-pink {
+  bottom: -200px;
+  left: -200px;
+  width: 640px;
+  height: 640px;
+  background: var(--bg-pink);
+  filter: blur(110px);
+}
+
+.blob-lilac {
+  top: -220px;
+  right: -200px;
+  width: 620px;
+  height: 620px;
+  background: var(--bg-lilac);
+  filter: blur(120px);
+}
+
+.hero-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.twinkle {
+  display: inline-flex;
+  flex: none;
+  color: var(--pink);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+.spark-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.spark {
+  position: absolute;
+  animation: sparkle-fade 0.7s ease-out forwards;
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 10px) scale(0.2) rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .twinkle,
+  .spark,
+  .btn-spark {
+    animation: none;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.eyebrow-hero {
+  margin: 0;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-purple);
+}
+
+.hero-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.hero h1 {
+  font-size: clamp(44px, 7vw, 72px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0;
+  /* background-clip: text clips to the line box; add room for descenders */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.hero-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.hero-bio p {
+  margin: 0;
+}
+
+.hero-bio mark {
+  background: linear-gradient(transparent 55%, var(--pink) 55%);
+  color: inherit;
+  padding: 0 2px;
+  margin: 0 -2px; /* keep the text aligned; only the highlight overhangs */
+}
+
+/* Keep the highlighted phrase on one line where there is room */
+@media (min-width: 721px) {
+  .hero-bio mark {
+    white-space: nowrap;
+  }
+}
+
+/* ---------- Project cards ---------- */
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(113, 74, 213, 0.12);
+  padding: 24px 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card h3 {
+  font-family: var(--fredoka);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.stack-line {
+  color: var(--faint);
+  margin: 0;
+}
+
+.card-intro {
+  color: var(--muted);
+  margin: 0;
+  font-style: italic;
+  font-size: 15px;
+}
+
+.card ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 1rem;
+}
+
+.card li {
+  margin-bottom: 6px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+/* ---------- Toolkit ---------- */
+
+.toolkit {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.toolkit-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toolkit-group .rule {
+  margin-bottom: 8px;
+}
+
+.toolkit dd {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* ---------- Background tabs ---------- */
+
+.background {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tabs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--fredoka);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--rose);
+  transition: color 0.15s;
+}
+
+.tab:hover,
+.tab:focus-visible {
+  color: var(--accent-strong);
+  outline: none;
+}
+
+.tab[data-active] {
+  color: var(--text);
+}
+
+.tab-star {
+  display: none;
+  flex: none;
+  color: var(--pink);
+}
+
+.tab[data-active] .tab-star {
+  display: inline-flex;
+}
+
+.tab-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.entry .rule {
+  margin-bottom: 10px;
+}
+
+.entry-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.entry-org {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--faint);
+}
+
+.entry-text {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--faint);
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 720px) {
+  /* Lighter wash so the beige shows through on narrow screens */
+  .blob {
+    opacity: 0.45;
+  }
+  .blob-pink,
+  .blob-lilac {
+    width: 380px;
+    height: 380px;
+  }
+  .blob-pink {
+    bottom: -140px;
+    left: -160px;
+  }
+  .blob-lilac {
+    top: -160px;
+    right: -160px;
+  }
+  /* Toolkit first, then projects */
+  .aside {
+    order: -1;
+  }
+  .background {
+    gap: 40px;
+  }
+  .background-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .background-section .tab-panel {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding: 48px 16px 64px;
+    gap: 48px;
+  }
+  .card {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .tabs-list {
+    gap: 18px;
+  }
+  .tab {
+    font-size: 22px;
+  }
+}
