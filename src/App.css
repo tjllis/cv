@@ -564,7 +564,7 @@ h2 {
 
 @media (max-width: 520px) {
   .page {
-    padding: 48px 16px 64px;
+    padding: 48px 32px 64px;
     gap: 48px;
   }
   .card {
